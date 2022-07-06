@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de idade</title>
+</head>
+<style>
+    *{ 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #4084D7;
+        }
+
+        h1{
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        #res{
+            font-size: 0.8em;
+            position: relative;
+            top: 6px;
+        }
+
+        span{
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+
+            color: white;
+        }
+
+        .container{
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -45%);
+        }
+
+        .caixa{
+            margin: 0 auto;
+            padding: 30px 30px 10px 30px;
+
+            background-color: #fff;
+            width: 400px;
+            border-radius: 50px
+
+            -webkit-box-shadow 10px 10px 20px -7px rgba(0,0,0,0.56);
+            box-shadow: 10px 10px 20px -7px rgba(0,0,0,0.56);    
+        }
+
+        img{
+            height: 200px;
+            display: block;
+            margin: 20px auto;
+        }
+
+        input, label{
+            margin: 10px 0;
+        }
+</style>
+<body>
+    <div class="container">
+        <header>
+            <h1>Verificador de idade</h1>
+        </header>
+        <main>
+            <div class="caixa">
+                <form action="">
+                    <label for="nascimento">Ano de nascimento:</label>
+                    <input type="number" name="nascimento" id="nascimento" checked>
+                    <label for="sexom">Sexo:</label>
+                    <input type="radio" name="sexo" id="sexom" style="position:relative; top:2px;">
+                    <label for="sexom" style="position:relative; top:1px;" checked>Masculino</label>
+                    <input type="radio" name="sexo" id="sexof" style="position:relative; top:2px; left:5px;">
+                    <label for="sexo" style="position:relative; top:1px; left:5px;">Feminino</label>
+                    <input type="button" value="Verificar" style="display:block; padding:3px; cursor:pointer;" onclick='resultado()'>
+                </form>
+                <div id="res">Preencha os dados acima para ver o resultado!</div>
+            </div>
+        </main>
+        <footer>
+            <span>&copy; MoonCode</span>
+        </footer>
+    </div>
+    <script>
+        function resultado(){
+            var data = new Date()
+            var ano = data.getFullYear()
+            var fano = document.querySelector('input#nascimento')
+            var res = document.querySelector('div#res')
+
+            if (Number(fano.value) < 1500 || Number(fano.value) > ano){
+                window.alert('[ERRO] Por favor digite o ano certo.')
+            }else{
+                var sex = document.getElementsByName('sexo')
+                var idade = ano - Number(fano.value)
+                var gênero = ''
+                var img = document.createElement('img')
+                img.setAttribute('id', 'foto')
+                if (sex[0].checked){
+                    gênero = 'Homem'
+
+                    if(idade >= 0 && idade < 10){
+                        img.setAttribute('src', 'img/Bebe-homem.png')
+                    } else if(idade < 21){
+                        img.setAttribute('src', 'Jovem-homem.png')
+                    } else if(idade < 50){
+                        img.setAttribute('src', 'img/Adulto-homem.png')
+                    } else{
+                        img.setAttribute('src', 'img/idoso-homem.png')
+                    }
+                } else if (sex[1].checked){
+                    gênero = 'Mulher'
+
+                    if(idade >= 0 && idade < 10){
+                        img.setAttribute('src', 'img/Bebe-mulher.png')
+                    } else if(idade < 21){
+                        img.setAttribute('src', 'img/Jovem-mulher.png')
+                    } else if(idade < 50){
+                        img.setAttribute('src', 'img/Adulta-mulher.jpg')
+                    } else{
+                        img.setAttribute('src', 'img/idosa-mulher.png')
+                    }
+                }
+                res.style.textAlign = 'center';
+                res.innerHTML = `Detectamos ${gênero} com ${idade} anos.`
+                res.appendChild (img)
+            }
+        }
+    </script>
+</body>
+</html>
