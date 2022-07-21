@@ -75,7 +75,7 @@
             <div class="caixa">
                 <form action="">
                     <label for="nascimento">Ano de nascimento:</label>
-                    <input type="number" name="nascimento" id="nascimento" checked>
+                    <input type="number" name="nascimento" id="nascimento" checked placeholder="Digite o seu ano aqui">
                     <label for="sexom">Sexo:</label>
                     <input type="radio" name="sexo" id="sexom" style="position:relative; top:2px;">
                     <label for="sexom" style="position:relative; top:1px;" checked>Masculino</label>
@@ -92,47 +92,49 @@
     </div>
     <script>
         function resultado(){
-            var data = new Date()
-            var ano = data.getFullYear()
-            var fano = document.querySelector('input#nascimento')
-            var res = document.querySelector('div#res')
+            let data = new Date()
+            let ano = data.getFullYear()
+            let num = document.querySelector('#nascimento')
+            let res = document.querySelector('#res')
 
-            if (Number(fano.value) < 1500 || Number(fano.value) > ano){
-                window.alert('[ERRO] Por favor digite o ano certo.')
+            if(num.value.length == 0 || num.value < 1699 || num.value > ano){
+                alert('[ERRO] Digite um ano válido.')
             }else{
-                var sex = document.getElementsByName('sexo')
-                var idade = ano - Number(fano.value)
-                var gênero = ''
-                var img = document.createElement('img')
-                img.setAttribute('id', 'foto')
-                if (sex[0].checked){
-                    gênero = 'Homem'
+                let gênero = ''
+                let img = document.createElement('img')
+                let idade = ano - Number(num.value) 
+                let sexo = document.getElementsByName('sexo')
 
-                    if(idade >= 0 && idade < 10){
-                        img.setAttribute('src', 'img/Bebe-homem.png')
-                    } else if(idade < 21){
-                        img.setAttribute('src', 'Jovem-homem.png')
-                    } else if(idade < 50){
-                        img.setAttribute('src', 'img/Adulto-homem.png')
-                    } else{
-                        img.setAttribute('src', 'img/idoso-homem.png')
-                    }
-                } else if (sex[1].checked){
-                    gênero = 'Mulher'
+                if(sexo[0].checked){
+                    gênero = 'homem'
 
-                    if(idade >= 0 && idade < 10){
-                        img.setAttribute('src', 'img/Bebe-mulher.png')
-                    } else if(idade < 21){
-                        img.setAttribute('src', 'img/Jovem-mulher.png')
-                    } else if(idade < 50){
-                        img.setAttribute('src', 'img/Adulta-mulher.jpg')
-                    } else{
-                        img.setAttribute('src', 'img/idosa-mulher.png')
-                    }
+                    if(idade >= 0 && idade <= 10){
+                    img.setAttribute('src', 'img/Bebe-homem.png')
+                } else if(idade <= 20){
+                    img.setAttribute('src', 'img/Jovem-homem.png')
+                } else if(idade <= 50){
+                    img.setAttribute('src', 'img/Adulto-homem.png')
+                } else{
+                    img.setAttribute('src', 'img/Idoso-homem.png')
                 }
-                res.style.textAlign = 'center';
-                res.innerHTML = `Detectamos ${gênero} com ${idade} anos.`
-                res.appendChild (img)
+            } else if (sexo[1].checked){
+                gênero = 'mulher'
+
+                if(idade >= 0 && idade <= 10){
+                    img.setAttribute('src', 'img/Bebe-mulher.png')
+                } else if(idade <= 20){
+                    img.setAttribute('src', 'img/Jovem-mulher.png')
+                } else if(idade <= 50){
+                    img.setAttribute('src', 'img/Adulta-mulher.jpg')
+                } else{
+                    img.setAttribute('src', 'img/idosa-mulher.png')
+                }
+            } else{
+                alert('[ERRO] Selecione uma das opções')
+            }
+            res.style.textAlign = 'center'
+            res.innerHTML = `Detectamos ${gênero} com ${idade} anos.`
+            res.appendChild (img)
             }
         }
     </script>
